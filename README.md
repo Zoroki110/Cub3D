@@ -1,27 +1,5 @@
 # Webserv
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/YourUsername/Webserv/ci.yml?branch=main)](https://github.com/YourUsername/Webserv/actions) [![License](https://img.shields.io/github/license/YourUsername/Webserv)](./LICENSE) [![Stars](https://img.shields.io/github/stars/YourUsername/Webserv?style=social)](https://github.com/YourUsername/Webserv/stargazers)
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/YourUsername/Webserv/main/logo.png" alt="Webserv Logo" width="200" />
-</p>
-
-## 📝 Table of Contents
-
-- [Project Overview](#project-overview)  
-- [Features](#features)  
-- [Getting Started](#getting-started)  
-  - [Prerequisites](#prerequisites)  
-  - [Installation](#installation)  
-  - [Usage](#usage)  
-- [Configuration](#configuration)  
-- [Project Structure](#project-structure)  
-- [Detailed Features](#detailed-features)  
-- [Contributing](#contributing)  
-- [License](#license)  
-
----
-
 ## 📝 Project Overview
 
 **Webserv** is a custom HTTP/1.1 server written in **C++98**, built as part of the 42 School curriculum. It supports non-blocking I/O, full request parsing, static file serving, CGI execution, routing via a flexible configuration file, and more.
