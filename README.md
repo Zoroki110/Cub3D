@@ -34,7 +34,7 @@
 
 ```bash
 # Clone
-git clone git@github.com:YourUsername/Webserv.git
+git clone git@github.com:Zoroki110/Webserv.git
 cd Webserv
 
 # Build
