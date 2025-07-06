@@ -39,3 +39,70 @@ cd Webserv
 
 # Build
 make
+
+### Usage
+
+```bash
+# Run with default config
+./webserv
+# Or specify a config file
+./webserv configs/example_site.conf
+```
+Open your browser at http://<host>:<port> (default: 127.0.0.1:8080)
+
+## 🛠 Built-in Commands
+
+Minishell implements several built-in commands:
+
+- `echo` - Print text to the terminal
+- `cd` - Change the current directory
+- `pwd` - Print working directory
+- `export` - Set environment variables
+- `unset` - Unset environment variables
+- `env` - Print the environment variables
+- `exit` - Exit the shell
+
+## 🏗️ Project Structure
+
+```
+minishell/
+│── src/
+│   ├── main.c
+│   ├── parser.c
+│   ├── executor.c
+│   ├── builtins.c
+│   ├── signals.c
+│── includes/
+│   ├── minishell.h
+│── libft/
+│── Makefile
+│── README.md
+```
+
+## 🔧 Features in Detail
+
+### 🔹 Command Execution
+
+Minishell supports execution of both built-in and external commands, managing child processes using `fork()` and `execve()`.
+
+### 🔹 Redirections & Pipes
+
+Supports input and output redirections (`<`, `>`, `>>`), and command piping (`|`).
+
+### 🔹 Heredoc (`<<`)
+
+Reads input until a specified delimiter is found.
+
+### 🔹 Signal Handling
+
+Handles `SIGINT` (`Ctrl+C`), `SIGQUIT` (`Ctrl+\`), and `EOF` (`Ctrl+D`).
+
+
+## 🏆 Acknowledgments
+This project was completed as part of the **42 School** curriculum.
+</br>
+Special thanks [Simon](https://github.com/Simonnawara) for this group project.
+
+
+
+✨ Happy Shell Scripting! 🚀
