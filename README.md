@@ -84,48 +84,84 @@ server {
     }
 }
 ```
+- listen: address and port
+- server_name: domain(s)
+- error_page: custom error page path
+- client_max_body_size: limit on request body
+- location: route block with:
+    - root / alias
+    - methods (GET|POST|DELETE)
+    - autoindex (on|off)
+    - index default file
+    - redirect URL
+    - cgi_pass executable
+    - upload_path for POST
 
 ## 🏗️ Project Structure
 
 ```
-minishell/
-│── src/
-│   ├── main.c
-│   ├── parser.c
-│   ├── executor.c
-│   ├── builtins.c
-│   ├── signals.c
-│── includes/
-│   ├── minishell.h
-│── libft/
-│── Makefile
-│── README.md
+webserv/
+    │── src/
+    │   ├── main.cpp
+    │   ├── Server.cpp
+    │   ├── Request.cpp
+    │   ├── Response.cpp
+    │   ├── Router.cpp
+    │   ├── CGIHandler.cpp
+    │   ├── ConfigParser.cpp
+    │   └── utils/
+    │       ├── Socket.cpp
+    │       ├── Timer.cpp
+    │       └── Logger.cpp
+    │── includes/
+    │   ├── webserv.hpp
+    │   └── Config.hpp
+    │── configs/
+    │   ├── default.conf
+    │   └── example_site.conf
+    │── Makefile
+    │── README.md
 ```
 
 ## 🔧 Features in Detail
 
-### 🔹 Command Execution
+### 🔹 Non-Blocking I/O & Event Loop
 
-Minishell supports execution of both built-in and external commands, managing child processes using `fork()` and `execve()`.
+All sockets run in non-blocking mode and are managed by a single `poll()`/`epoll`/`kqueue` loop, ensuring high concurrency without blocking.
 
-### 🔹 Redirections & Pipes
+### 🔹 HTTP/1.1 Parsing & Compliance
 
-Supports input and output redirections (`<`, `>`, `>>`), and command piping (`|`).
+Parses request lines, headers, chunked transfer bodies; generates correct status lines, headers, and responses (with chunked or Content-Length).
 
-### 🔹 Heredoc (`<<`)
+### 🔹 Static File Serving
 
-Reads input until a specified delimiter is found.
+Translates URIs to filesystem paths, checks permissions, serves files (including large streaming) without blocking the main loop.
 
-### 🔹 Signal Handling
+### 🔹 CGI Execution
 
-Handles `SIGINT` (`Ctrl+C`), `SIGQUIT` (`Ctrl+\`), and `EOF` (`Ctrl+D`).
+Forks and `execve()` external scripts, setting up CGI environment (`REQUEST_METHOD`, `PATH_INFO`, `QUERY_STRING`, etc.), streams script output back to client.
 
+### 🔹 File Uploads & Body Limits
+
+Handles `multipart/form-data`, saves uploaded files to a configurable directory, enforces `client_max_body_size`, and returns `413 Payload Too Large` when exceeded.
+
+### 🔹 Routing & Virtual Hosts
+
+Supports multiple `server` blocks with `server_name` matching and per-location directives (`root`/`alias`, `index`, `redirect`, `autoindex`, allowed methods, `cgi_pass`, `upload_path`).
+
+### 🔹 Error Handling
+
+Provides default HTML pages for all 4xx/5xx errors, with ability to override via the `error_page` directive.
+
+### 🔹 Graceful Shutdown
+
+Catches `SIGINT`/`SIGQUIT` to close all connections cleanly, free resources, and exit without crashes.
 
 ## 🏆 Acknowledgments
 This project was completed as part of the **42 School** curriculum.
 </br>
-Special thanks [Simon](https://github.com/Simonnawara) for this group project.
+Special thanks to [Simon](https://github.com/Simonnawara) and [Ismael](https://github.com/ismaeljda) for this group project.
 
 
 
-✨ Happy Shell Scripting! 🚀
+✨ Happy HTTP Serving! 🚀
