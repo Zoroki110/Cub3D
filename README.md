@@ -46,22 +46,44 @@ make
 ```bash
 # Run with default config
 ./webserv
+
 # Or specify a config file
 ./webserv configs/example_site.conf
 ```
 Open your browser at http://<host>:<port> (default: 127.0.0.1:8080)
 
-## 🛠 Built-in Commands
+## 🔧 Configuration
 
-Minishell implements several built-in commands:
+Configurations live under configs/ and follow an NGINX-like syntax:
 
-- `echo` - Print text to the terminal
-- `cd` - Change the current directory
-- `pwd` - Print working directory
-- `export` - Set environment variables
-- `unset` - Unset environment variables
-- `env` - Print the environment variables
-- `exit` - Exit the shell
+```nginx
+server {
+    listen 127.0.0.1:8080;
+    server_name localhost;
+
+    error_page 404 /errors/404.html;
+    client_max_body_size 5M;
+
+    location / {
+        root ./public;
+        index index.html;
+        methods GET DELETE;
+        autoindex on;
+    }
+
+    location /upload {
+        root ./uploads;
+        methods POST;
+        upload_path ./uploads;
+    }
+
+    location /php/ {
+        root ./www;
+        cgi_pass /usr/bin/php-cgi;
+        methods GET POST;
+    }
+}
+```
 
 ## 🏗️ Project Structure
 
